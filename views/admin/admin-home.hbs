@@ -1,0 +1,115 @@
+
+
+{{!-- <head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+</head> --}}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin Pannel</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/admin">View all Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/add-users">Add user</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">All Orders</a>
+        </li>
+      </ul>
+      <div class="d-flex pe-2">
+      <input class="form-control me-2" onkeyup="search()" id="search" style="width: 12rem;" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+
+      </div>
+      <div>
+        <button type="button" class="btn btn-danger"><a href="/admin/logout" style="text-decoration: none;">LOGOUT</a></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<section>
+    <div class="container">
+        <table class="table mt-4" id="tableid">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email Id</th>
+       <th scope="col">Manage</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each users}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.email}}</td>
+      <td>
+      <a href="/admin/edit-user/{{this._id}}"><button type="button" class="btn btn-info">Edit</button></a>
+{{!-- 
+      {{#if this.status}}
+
+      <a href="/admin/unblock/{{this._id}}" onclick="retrun confirm('Click Ok to confirm unblock {{this.name}}')" type="submit" ><button type="button" class="btn btn-warning">Unblock</button></a>
+
+     {{else}}
+
+       <a href="/admin/block/{{this._id}}" onclick="retrun confirm('Click Ok to confirm block {{this.name}}')" type="submit" ><button type="button" class="btn btn-warning">Block</button></a>
+
+     {{/if}} --}}
+
+
+       <a href="/admin/delete-user/{{this._id}}"><button type="button" class="btn btn-danger" onclick="return confirm('Are you want to delete {{this.name}} ? ')">Delete</button></a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+    </div>
+</section>
+
+
+
+{{!-- <script>
+$(function(){
+    $('#tableid').DataTable();
+});
+</script> --}}
+
+<script>
+
+function search() {
+    // Declare 
+  
+  
+
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("tableid");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+}
+
+</script>
